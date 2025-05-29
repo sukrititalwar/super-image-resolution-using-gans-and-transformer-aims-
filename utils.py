@@ -11,7 +11,6 @@ import sys
 import matplotlib.pyplot as plt
 plt.switch_backend('agg')
 
-# Subpixel Conv will upsample from (h, w, c) to (h/r, w/r, c/r^2)
 def SubpixelConv2D(input_shape, scale=4):
     def subpixel_shape(input_shape):
         dims = [input_shape[0], input_shape[1] * scale, input_shape[2] * scale, int(input_shape[3] / (scale ** 2))]
@@ -23,12 +22,10 @@ def SubpixelConv2D(input_shape, scale=4):
 
     return Lambda(subpixel, output_shape=subpixel_shape)
 
-# Takes list of images and provide HR images in form of numpy array
 def hr_images(images):
     images_hr = array(images)
     return images_hr
 
-# Takes list of images and provide LR images in form of numpy array
 def lr_images(images_real, downscale):
     images = []
     for img in range(len(images_real)):
@@ -136,8 +133,7 @@ def load_test_data(directory, ext, number_of_images=100):
 
     return x_test_lr
 
-# While training save generated image(in form LR, SR, HR)
-# Save only one image as sample  
+
 def plot_generated_images(output_dir, epoch, generator, x_test_hr, x_test_lr, dim=(1, 3), figsize=(15, 5)):
     examples = x_test_hr.shape[0]
     print(examples)
@@ -191,7 +187,6 @@ def plot_test_generated_images_for_model(output_dir, generator, x_test_hr, x_tes
         plt.tight_layout()
         plt.savefig(output_dir + 'test_generated_image_%d.png' % index)
 
-# Takes LR images and save respective HR images
 def plot_test_generated_images(output_dir, generator, x_test_lr, figsize=(5, 5)):
     examples = x_test_lr.shape[0]
     image_batch_lr = denormalize(x_test_lr)
