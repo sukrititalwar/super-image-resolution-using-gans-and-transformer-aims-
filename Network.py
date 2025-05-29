@@ -1,12 +1,4 @@
-#!/usr/bin/env python
-#title           :Network.py
-#description     :Architecture file(Generator and Discriminator)
-#author          :Deepak Birla
-#date            :2018/10/30
-#usage           :from Network import Generator, Discriminator
-#python_version  :3.5.4 
 
-# Modules
 from keras.layers import Dense
 from keras.layers.core import Activation
 from keras.layers.normalization import BatchNormalization
@@ -19,7 +11,7 @@ from keras.layers.advanced_activations import LeakyReLU, PReLU
 from keras.layers import add
 
 
-# Residual block
+
 def res_block_gen(model, kernal_size, filters, strides):
     
     gen = model
