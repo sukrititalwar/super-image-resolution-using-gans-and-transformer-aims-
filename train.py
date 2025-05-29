@@ -7,7 +7,6 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 from transformers import SwinIRForImageSuperResolution, SwinIRImageProcessor
 
-# Paths
 HR_DIR = './data/train/HR'
 LR_DIR = './data/train/LR'
 BATCH_SIZE = 4
@@ -46,7 +45,6 @@ class SRDataset(Dataset):
 dataset = SRDataset(HR_DIR, LR_DIR, HR_SIZE, LR_SIZE)
 loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
 
-# --- Updated model import and loading ---
 model = SwinIRForImageSuperResolution.from_pretrained("caidas/swinir-classical-x4")
 model = model.to(DEVICE)
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
@@ -66,7 +64,6 @@ for epoch in range(EPOCHS):
     avg_loss = epoch_loss / len(dataset)
     print(f"Epoch {epoch+1}/{EPOCHS} - Avg MSE Loss: {avg_loss:.6f}")
 
-    # Save checkpoint
     if (epoch + 1) % 5 == 0:
         torch.save(model.state_dict(), f'swinir_epoch_{epoch+1}.pth')
 
